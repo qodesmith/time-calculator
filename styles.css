@@ -1,0 +1,201 @@
+@font-face {
+  /* http://www.dafont.com/ds-digital.font */
+  font-family: 'DS-Digital';
+  src: url(DS-DIGII.TTF);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  background: url(http://goo.gl/nMKv30) no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: sans-serif;
+  font-size: 1.2em;
+}
+.calc-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  margin: 0 auto;
+  padding: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border-radius: 17px;
+  background: #ccc;
+  width: 300px;
+  height: 450px;
+}
+.readout {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: gray;
+  border-radius: 10px;
+  font-family: 'DS-Digital', monospace;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px;
+  font-size: 1.6em;
+  font-weight: bold;
+  overflow: hidden;
+}
+.plain-readout {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  font-size: 0.7em;
+  font-weight: 100;
+  height: 2em;
+}
+.number-pad {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+.number-pad .numbers {
+  width: 75%;
+  -webkit-flex-grow: 3;
+      -ms-flex-positive: 3;
+          flex-grow: 3;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.number-pad .numbers .row {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.number-pad .numbers .row .number {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  cursor: pointer;
+}
+.number-pad .numbers .row .number:hover {
+  background: white;
+}
+.number-pad .numbers .row .number.active {
+  background: black;
+  color: white;
+}
+.number-pad .numbers .row .number#number0 {
+  -webkit-flex-grow: 5;
+      -ms-flex-positive: 5;
+          flex-grow: 5;
+}
+.number-pad .numbers .row .number#colon {
+  -webkit-flex-grow: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+.number-pad .operators {
+  width: 25%;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+.number-pad .operators .clear,
+.number-pad .operators .delete,
+.number-pad .operators .add,
+.number-pad .operators .subtract,
+.number-pad .operators .equals {
+  border: 1px solid gray;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.number-pad .operators .clear:hover,
+.number-pad .operators .delete:hover,
+.number-pad .operators .add:hover,
+.number-pad .operators .subtract:hover,
+.number-pad .operators .equals:hover {
+  background: white;
+}
+.number-pad .operators .clear.active,
+.number-pad .operators .delete.active,
+.number-pad .operators .add.active,
+.number-pad .operators .subtract.active,
+.number-pad .operators .equals.active {
+  background: black;
+  color: white;
+}
