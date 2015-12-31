@@ -1,10 +1,10 @@
+* {
+  box-sizing: border-box;
+}
 @font-face {
   /* http://www.dafont.com/ds-digital.font */
   font-family: 'DS-Digital';
   src: url(DS-DIGII.TTF);
-}
-* {
-  box-sizing: border-box;
 }
 body {
   background: url(http://goo.gl/nMKv30) no-repeat center center fixed;
@@ -44,7 +44,7 @@ body {
   height: 60px;
   background: gray;
   border-radius: 10px;
-  font-family: 'DS-Digital', monospace;
+  font-family: 'DS-Digital', monospace, sans-serif;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -159,11 +159,7 @@ body {
       -ms-flex-align: stretch;
           align-items: stretch;
 }
-.number-pad .operators .clear,
-.number-pad .operators .delete,
-.number-pad .operators .add,
-.number-pad .operators .subtract,
-.number-pad .operators .equals {
+.number-pad .operators .operator {
   border: 1px solid gray;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -184,18 +180,10 @@ body {
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
-.number-pad .operators .clear:hover,
-.number-pad .operators .delete:hover,
-.number-pad .operators .add:hover,
-.number-pad .operators .subtract:hover,
-.number-pad .operators .equals:hover {
+.number-pad .operators .operator:hover {
   background: white;
 }
-.number-pad .operators .clear.active,
-.number-pad .operators .delete.active,
-.number-pad .operators .add.active,
-.number-pad .operators .subtract.active,
-.number-pad .operators .equals.active {
+.number-pad .operators .operator.active {
   background: black;
   color: white;
 }
