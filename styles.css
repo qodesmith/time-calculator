@@ -11,10 +11,18 @@ body {
   background-size: cover;
   margin: 0;
   padding: 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 100vw;
   height: 100vh;
   font-family: sans-serif;
-  font-size: 1.2em;
 }
 .calc-container {
   display: -webkit-flex;
@@ -26,22 +34,16 @@ body {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
-  position: relative;
-  margin: 0 auto;
   padding: 10px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
   border-radius: 17px;
   background: #ccc;
-  width: 300px;
-  height: 450px;
+  width: 60%;
+  height: 80%;
 }
-.readout {
+.calc-container .readout {
   position: relative;
   width: 100%;
-  height: 60px;
+  height: 15vmin;
   background: gray;
   border-radius: 10px;
   font-family: 'DS-Digital', monospace, sans-serif;
@@ -55,11 +57,11 @@ body {
       -ms-flex-align: center;
           align-items: center;
   padding: 0 10px;
-  font-size: 1.6em;
+  font-size: 8vmin;
   font-weight: bold;
   overflow: hidden;
 }
-.plain-readout {
+.calc-container .plain-readout {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -69,22 +71,28 @@ body {
   -webkit-justify-content: flex-end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  font-size: 0.7em;
+  font-size: 3vmin;
   font-weight: 100;
-  height: 2em;
+  height: 8vmin;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding-right: 10px;
+  background: #acacac;
 }
-.number-pad {
+.calc-container .buttons {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 100%;
+  font-size: 5vmin;
+  padding: 5px;
   margin-top: 10px;
   border: 1px solid gray;
   border-radius: 10px;
+  background: #acacac;
 }
-.number-pad .numbers {
-  width: 75%;
+.calc-container .buttons .numbers {
   -webkit-flex-grow: 3;
       -ms-flex-positive: 3;
           flex-grow: 3;
@@ -95,7 +103,7 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-.number-pad .numbers .row {
+.calc-container .buttons .numbers .row {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -106,43 +114,7 @@ body {
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
-.number-pad .numbers .row .number {
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 10px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  cursor: pointer;
-}
-.number-pad .numbers .row .number:hover {
-  background: white;
-}
-.number-pad .numbers .row .number.active {
-  background: black;
-  color: white;
-}
-.number-pad .numbers .row .number#number0 {
-  -webkit-flex-grow: 5;
-      -ms-flex-positive: 5;
-          flex-grow: 5;
-}
-.number-pad .numbers .row .number#colon {
-  -webkit-flex-grow: 2;
-      -ms-flex-positive: 2;
-          flex-grow: 2;
-}
-.number-pad .operators {
-  width: 25%;
+.calc-container .buttons .operators {
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
@@ -159,7 +131,7 @@ body {
       -ms-flex-align: stretch;
           align-items: stretch;
 }
-.number-pad .operators .operator {
+.calc-container .buttons .operators .operator {
   border: 1px solid gray;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -174,16 +146,88 @@ body {
       -ms-flex-align: center;
           align-items: center;
   cursor: pointer;
-  margin: 10px;
   border-radius: 5px;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
-.number-pad .operators .operator:hover {
+.calc-container .buttons .button {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+.calc-container .buttons .button#number0 {
+  -webkit-flex-grow: 5;
+      -ms-flex-positive: 5;
+          flex-grow: 5;
+}
+.calc-container .buttons .button#colon {
+  -webkit-flex-grow: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+}
+.calc-container .buttons .button:hover {
   background: white;
 }
-.number-pad .operators .operator.active {
+.calc-container .buttons .button.active {
   background: black;
   color: white;
+}
+@media screen and (max-width: 767px) {
+  .calc-container {
+    background: red;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .calc-container .readout {
+    height: 15vh;
+    font-size: 10vh;
+  }
+  .calc-container .plain-readout {
+    height: 10vh;
+    font-size: 4vh;
+  }
+  .calc-container .buttons {
+    padding: 3px;
+  }
+  .calc-container .buttons .button {
+    font-size: 6vh;
+    margin: 3px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .calc-container {
+    background: blue;
+    width: 80%;
+    height: 80%;
+  }
+  .calc-container .readout {
+    height: 15vh;
+    font-size: 10vh;
+  }
+  .calc-container .plain-readout {
+    height: 10vh;
+    font-size: 4vh;
+  }
+  .calc-container .buttons {
+    padding: 3px;
+  }
+  .calc-container .buttons .button {
+    font-size: 5vh;
+  }
 }
