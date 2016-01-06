@@ -169,6 +169,10 @@ body {
   border: 1px solid gray;
   background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 .calc-container .buttons .button#number0 {
   -webkit-flex-grow: 5;
@@ -189,7 +193,6 @@ body {
 }
 @media screen and (max-width: 767px) {
   .calc-container {
-    background: red;
     width: 100vw;
     height: 100vh;
     border-radius: 0;
@@ -212,7 +215,6 @@ body {
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .calc-container {
-    background: blue;
     width: 80%;
     height: 80%;
   }

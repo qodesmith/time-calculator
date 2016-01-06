@@ -17,11 +17,9 @@ function operate(opr) {
 
   // Create an object representing the users input:
   // ex: {d: 1, h: 16:, m: 7, s: 32}
-  console.log('before:',result);
   numbers.map(function(num, i) {
     result[segments[i]] += Number(num) * one;
   });
-  console.log('after:',result);
 
   // Equals:
   if(opr === 'equals') return equals();
@@ -32,7 +30,6 @@ function operate(opr) {
 }
 
 function equals() {
-  result = {s: 0, m: 0, h: 0, d: 0, times: 0};
   readout.textContent = '';
   var segments = ['d', 'h', 'm', 's'];
 
@@ -40,7 +37,11 @@ function equals() {
     if(result[segments[i]] > 0) readout.textContent += result[segments[i]];
   }
 
-  result.equals = true;
+  // TO DO:
+  // logic for calculating +60 on the seconds & minutes
+  // and +24 on the hours.
+
+  result.complete = true;
 }
 
 function plainReadout() {
@@ -54,10 +55,8 @@ function plainReadout() {
   pReadout.textContent = input.reverse().join(' ');
 }
 
-function reset(num) {
-  console.log('reset');
+function reset() {
   readout.textContent = '';
-  plainReadout();
   result = {s: 0, m: 0, h: 0, d: 0, times: 0};
 }
 
@@ -75,47 +74,52 @@ function clearActives() {
 
 // CLICK
 document.body.addEventListener('click', function(e) {
-  var el = e.target;
+  var classes = e.target.classList;
+  var id = e.target.id;
 
   // Untrack keypress button.
-  if(el.classList.contains('button')) result.button = '';
+  if(classes.contains('button')) result.button = '';
 
   // Reset the calculator if following an equals.
-  if(result.equals) {
-    if(el.id === 'colon' || el.id === 'delete' || el.id === 'equals') return;
-    if(el.classList.contains('number')) reset();
+  if(result.complete) {
+    if(id === 'colon' || id === 'delete' || id === 'equals') return;
+    if(classes.contains('number')) reset();
+    if(id === 'add' || id === 'subtract') result = {s: 0, m: 0, h: 0, d: 0, times: 0};
   }
 
   // If we're expecting a number after an operator.
   if(result.operating) {
-    if(el.id === 'colon' || el.id === 'delete') return;
-    if(el.classList.contains('number')) readout.textContent = '';
+    if(id === 'colon' || id === 'delete') return;
+    if(classes.contains('number')) readout.textContent = '';
   }
 
-  // Reset the calculator.
-  if(el.id === 'clear') reset();
+  // CLR
+  if(id === 'clear') reset();
 
-  // Remove a single character from the readout.
-  if(el.id === 'delete') readout.textContent = readout.textContent.substring(0, readout.textContent.length -1);
+  // DEL
+  if(id === 'delete') readout.textContent = readout.textContent.substring(0, readout.textContent.length -1);
 
-  // Perform a math operation.
-  if(el.id === 'add' || el.id === 'subtract') operate(el.id);
+  // + | -
+  if(id === 'add' || id === 'subtract') {
+    result.complete = '';
+    operate(id);
+  }
 
-  // Calculate an answer.
-  if(el.id === 'equals') operate('equals');
+  // =
+  if(id === 'equals') operate('equals');
 
-  // Colon logic.
-  if(el.id === 'colon') {
+  // :
+  if(id === 'colon') {
     if(readout.textContent.split(':').length === 4) return plainReadout(); // Prevent colons after 4 time sections.
     if(readout.textContent[readout.textContent.length - 1] === ':') return plainReadout(); // Prevent double colons.
     if(!readout.textContent) return plainReadout();
     readout.textContent += ':';
   }
 
-  // Number button logic.
-  if(el.classList.contains('number')) {
+  // Numbers.
+  if(classes.contains('number')) {
     result.operating = '';
-    readout.textContent += el.textContent;
+    readout.textContent += e.target.textContent;
   }
 
   plainReadout();
@@ -123,14 +127,16 @@ document.body.addEventListener('click', function(e) {
 
 // MOUSEDOWN
 document.body.addEventListener('mousedown', function(e) {
+  var classes = e.target.classList;
   clearActives();
-  if(e.target.classList.contains('button')) e.target.classList.add('active');
+  if(classes.contains('button')) classes.add('active');
 });
 
 // MOUSEUP
 document.body.addEventListener('mouseup', function(e) {
+  var classes = e.target.classList;
   clearActives();
-  if(e.target.classList.contains('active')) e.target.classList.remove('active');
+  if(classes.contains('active')) classes.remove('active');
 });
 
 
@@ -201,7 +207,7 @@ document.body.addEventListener('keydown', function(e) {
 });
 
 // KEYUP
-document.body.addEventListener('keyup', function(e) {
+document.body.addEventListener('keyup', function() {
   clearActives();
   result.button = '';
 });
