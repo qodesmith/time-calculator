@@ -51,37 +51,36 @@ function equals() {
 
   // Convert number to be subtracted to negatives
   // and total up the numbers.
-  nums.map(function(num, i) {
+  function toNegatives(num, i) {
     if(Number(num)) {
       nums[i - 1] === '-' ? seconds -= num : seconds += num;
     }
-  });
+  }
+  nums.map(toNegatives);
+
+  segments.reverse(); // Order necessary for convertSum below.
 
   // Convert lump-sum seconds to d:h:m:s format.
-  if(seconds >= 86400) { // Days.
-    total.d = Math.floor(seconds / 86400);
-    seconds %= 86400;
-  } else {
-    total.d = null;
+  function convertSum(num, i) {
+    var l = segments[i];
+
+    if(seconds >= num) {
+      total[l] = Math.floor(seconds / num);
+      seconds %= num;
+    } else {
+      if(l === 'd') return total[l] = null;
+      total[segments[i - 1]] === null ? total[l] = null : total[l] = 0;
+    }
   }
-  if(seconds >= 3600) { // Hours.
-    total.h = Math.floor(seconds / 3600);
-    seconds %= 3600;
-  } else {
-    total.d === null ? total.h = null : total.h = 0;
-  }
-  if(seconds >= 60) { // Minutes.
-    total.m = Math.floor(seconds / 60);
-    seconds %= 60;
-  } else {
-    total.h === null ? total.m = null : total.m = 0;
-  }
-  if(seconds) total.s = seconds; // Seconds.
+  [86400, 3600, 60].map(convertSum);
+  // |      |    |
+  // d      h    m --> in seconds.
+  if(seconds) total.s = seconds;
 
   // Display answer.
   readout.textContent = '';
   function displayAnswer(seg) { if(total[seg] !== null) readout.textContent += total[seg] + ':'; }
-  segments.reverse().map(displayAnswer);
+  segments.map(displayAnswer);
   readout.textContent = readout.textContent.slice(0, -1);
   plainReadout();
 }
