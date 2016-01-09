@@ -1,70 +1,110 @@
 var readout = document.querySelector('.readout');
 var pReadout = document.querySelector('.plain-readout');
-var result = {s: 0, m: 0, h: 0, d: 0, times: 0};
+var nums = [];
 
 function operate(opr) {
-  // Remove trailing colons.
-  if(readout.textContent[readout.textContent.length - 1] === ':') {
-    readout.textContent = readout.textContent.substring(0, readout.textContent.length -1);
+  var segments = ['s', 'm', 'h', 'd'];
+  var input = readout.textContent;
+  if(!input) return; // Do nothing for blank readouts.
+  if(nums.complete && opr === '=') return;
+  if(nums.complete) nums = []; // Reset for operators after calculation.
+
+  // Convert user input into an array of numbers.
+  function toNumber(num) { return Number(num); }
+  input = input.split(':').reverse().map(toNumber);
+
+  // Convert input to a total of seconds.
+  var seconds = null;
+  var values = [1, 60, 3600, 86400];
+  for(var i = 0; i < input.length; i++) {
+    seconds += input[i] * values[i];
   }
 
-  // Prevent consecutive operators.
-  if(result.operating) return result.operator = opr;
+  if(nums.operating) {
+    if(opr === '=') {
+      if(nums.length < 4) return;
+      nums.pop();
+      return equals();
+    }
 
-  var numbers = readout.textContent.split(':');
-  var segments = ['s', 'm', 'h', 'd'].slice(0, numbers.length).reverse();
-  var one = result.operator === 'add' || !result.times ? 1 : -1;
+    nums.pop();
+    return nums.push(opr);
+  } else if(opr === '=') {
+    nums.push(seconds);
+    return equals();
+  }
 
-  // Create an object representing the users input:
-  // ex: {d: 1, h: 16:, m: 7, s: 32}
-  numbers.map(function(num, i) {
-    result[segments[i]] += Number(num) * one;
-  });
-
-  // Equals:
-  if(opr === 'equals') return equals();
-
-  result.operating = true;
-  result.operator = opr;
-  result.times++;
+  nums.operating = true;
+  nums.push(seconds); // Number.
+  nums.push(opr); // Operator.
 }
 
 function equals() {
-  readout.textContent = '';
-  var segments = ['d', 'h', 'm', 's'];
+  var segments = ['s', 'm', 'h', 'd'];
+  var total = {s: null, m: null, h: null, d: null};
+  var seconds = null;
+  nums.complete = true;
 
-  for(i in segments) {
-    if(result[segments[i]] > 0) readout.textContent += result[segments[i]];
+  // Remove trailing operator.
+  var last = nums[nums.length - 1];
+  if(last === '+' || last === '-') nums.pop();
+
+  // Convert number to be subtracted to negatives
+  // and total up the numbers.
+  nums.map(function(num, i) {
+    if(Number(num)) {
+      nums[i - 1] === '-' ? seconds -= num : seconds += num;
+    }
+  });
+
+  // Convert lump-sum seconds to d:h:m:s format.
+  if(seconds >= 86400) { // Days.
+    total.d = Math.floor(seconds / 86400);
+    seconds %= 86400;
+  } else {
+    total.d = null;
   }
+  if(seconds >= 3600) { // Hours.
+    total.h = Math.floor(seconds / 3600);
+    seconds %= 3600;
+  } else {
+    total.d === null ? total.h = null : total.h = 0;
+  }
+  if(seconds >= 60) { // Minutes.
+    total.m = Math.floor(seconds / 60);
+    seconds %= 60;
+  } else {
+    total.h === null ? total.m = null : total.m = 0;
+  }
+  if(seconds) total.s = seconds; // Seconds.
 
-  // TO DO:
-  // logic for calculating +60 on the seconds & minutes
-  // and +24 on the hours.
-
-  result.complete = true;
+  // Display answer.
+  readout.textContent = '';
+  function displayAnswer(seg) { if(total[seg] !== null) readout.textContent += total[seg] + ':'; }
+  segments.reverse().map(displayAnswer);
+  readout.textContent = readout.textContent.slice(0, -1);
+  plainReadout();
 }
 
 function plainReadout() {
   if(!readout.textContent.length) return pReadout.textContent = '';
 
   var segments = ['sec', 'min', 'hr', 'day'];
-  var input = readout.textContent.split(':').reverse().map(function(num, i) {
-    return Number(num) + segments[i];
-  });
+  function addSegments(num, i) { return Number(num) + segments[i]; }
+  var input = readout.textContent.split(':').reverse().map(addSegments);
 
   pReadout.textContent = input.reverse().join(' ');
 }
 
 function reset() {
+  nums = [];
   readout.textContent = '';
-  result = {s: 0, m: 0, h: 0, d: 0, times: 0};
 }
 
 function clearActives() {
   var actives = document.querySelectorAll('.active');
-  [].map.call(actives, function(el) {
-    el.classList.remove('active');
-  });
+  function byeActive(el) { el.classList.remove('active'); }
+  [].map.call(actives, byeActive); // Call .map on array-like object 'actives'.
 }
 
 
@@ -78,17 +118,16 @@ document.body.addEventListener('click', function(e) {
   var id = e.target.id;
 
   // Untrack keypress button.
-  if(classes.contains('button')) result.button = '';
+  if(classes.contains('button')) nums.button = false;
 
-  // Reset the calculator if following an equals.
-  if(result.complete) {
+  // If following an completed calculation...
+  if(nums.complete) {
     if(id === 'colon' || id === 'delete' || id === 'equals') return;
     if(classes.contains('number')) reset();
-    if(id === 'add' || id === 'subtract') result = {s: 0, m: 0, h: 0, d: 0, times: 0};
   }
 
   // If we're expecting a number after an operator.
-  if(result.operating) {
+  if(nums.operating) {
     if(id === 'colon' || id === 'delete') return;
     if(classes.contains('number')) readout.textContent = '';
   }
@@ -99,14 +138,8 @@ document.body.addEventListener('click', function(e) {
   // DEL
   if(id === 'delete') readout.textContent = readout.textContent.substring(0, readout.textContent.length -1);
 
-  // + | -
-  if(id === 'add' || id === 'subtract') {
-    result.complete = '';
-    operate(id);
-  }
-
-  // =
-  if(id === 'equals') operate('equals');
+  // + | - | =
+  if(id === 'add' || id === 'subtract' || id === 'equals') operate(e.target.textContent);
 
   // :
   if(id === 'colon') {
@@ -118,7 +151,7 @@ document.body.addEventListener('click', function(e) {
 
   // Numbers.
   if(classes.contains('number')) {
-    result.operating = '';
+    nums.operating = false;
     readout.textContent += e.target.textContent;
   }
 
@@ -147,8 +180,17 @@ document.body.addEventListener('mouseup', function(e) {
 // KEYDOWN
 document.body.addEventListener('keydown', function(e) {
   // Prevent auto-repeat, allow for delete key.
-  if(result.button === e.which && e.which !== 8) return;
-  result.button = e.which;
+  if(nums.button === e.which && e.which !== 8) return;
+  nums.button = e.which;
+
+  // After a calculation, prevent these keypresses:
+  // :, backspace / delete, =, enter.
+  if(nums.complete) {
+    var badKey = [186, 8, 187, 13].some(function(n) {
+      return n === e.which;
+    });
+    if(badKey) return;
+  }
 
   var num = document.querySelector('#number' + (e.which - 48));
 
@@ -156,8 +198,13 @@ document.body.addEventListener('keydown', function(e) {
   if(num) {
 
     // If we're expecting a number after an operator.
-    if(result.operator) {
-      result.operator = '';
+    if(nums.operating) {
+      nums.operating = false;
+      readout.textContent = '';
+    }
+
+    if(nums.complete) {
+      nums = [];
       readout.textContent = '';
     }
 
@@ -170,18 +217,19 @@ document.body.addEventListener('keydown', function(e) {
   } else if(e.which === 186 && e.shiftKey) {
     document.querySelector('#colon').classList.add('active');
 
-    if(result.operator) return; // Do nothing if operating.
-    if(!readout.textContent) return;
+    if(nums.operating) return; // Do nothing if operating.
+    if(!readout.textContent) return; // Do nothing for blank readout.
     if(readout.textContent.split(':').length === 4) return; // Prevent colons after 4 time sections.
     if(readout.textContent[readout.textContent.length - 1] === ':') return; // Prevent double colons.
+
     readout.textContent += ':';
 
   // Backspace / delete.
   } else if(e.which === 8) {
     document.querySelector('#delete').classList.add('active');
 
-    if(result.operator) return; // Do nothing if operating.
-    readout.textContent = readout.textContent.substring(0, readout.textContent.length -1);
+    if(nums.operating) return; // Do nothing if operating.
+    readout.textContent = readout.textContent.split('').slice(0, -1).join('');
     plainReadout();
 
   // ESC
@@ -192,22 +240,22 @@ document.body.addEventListener('keydown', function(e) {
   // +
   } else if(e.which === 187 && e.shiftKey) {
     document.querySelector('#add').classList.add('active');
-    operate('add');
+    operate('+');
 
   // -
   } else if(e.which === 189 && !e.shiftKey) {
     document.querySelector('#subtract').classList.add('active');
-    operate('subtract');
+    operate('-');
 
-  // =
-  } else if(e.which === 187 && !e.shiftKey) {
+  // = | enter
+  } else if((e.which === 187 && !e.shiftKey) || e.which === 13) {
     document.querySelector('#equals').classList.add('active');
-    equals();
+    operate('=');
   }
 });
 
 // KEYUP
 document.body.addEventListener('keyup', function() {
   clearActives();
-  result.button = '';
+  nums.button = false;
 });
