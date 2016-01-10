@@ -212,6 +212,7 @@ body {
   top: 0;
   left: 0;
   z-index: -1;
+  /* http://compresspng.com/ */
   background: url('grunge.png') no-repeat center center fixed;
   background-size: cover;
 }
