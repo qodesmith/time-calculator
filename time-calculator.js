@@ -75,7 +75,7 @@ function equals() {
   [86400, 3600, 60].map(convertSum);
   // |      |    |
   // d      h    m --> in seconds.
-  if(seconds) total.s = seconds;
+  total.s = seconds;
 
   // Display answer.
   readout.textContent = '';
@@ -186,6 +186,7 @@ document.body.addEventListener('keydown', function(e) {
   // :, backspace / delete, =, enter.
   if(nums.complete) {
     var badKey = [186, 8, 187, 13].some(function(n) {
+      if(e.which === 187 && e.shiftKey) return false; // Allow '+'.
       return n === e.which;
     });
     if(badKey) return;
