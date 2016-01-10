@@ -6,6 +6,7 @@ function operate(opr) {
   var segments = ['s', 'm', 'h', 'd'];
   var input = readout.textContent;
   if(!input) return; // Do nothing for blank readouts.
+  if(input[input.length - 1] === ':') input = input.substring(0, input.length -1); // Remove trailing colons.
   if(nums.complete && opr === '=') return;
   if(nums.complete) nums = []; // Reset for operators after calculation.
 
