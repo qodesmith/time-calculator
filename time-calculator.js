@@ -64,7 +64,7 @@ function equals() {
   function convertSum(num, i) {
     var l = segments[i];
 
-    if(seconds >= num) {
+    if(Math.abs(seconds) >= num) { // Math.abs() necessary for negative times.
       total[l] = Math.floor(seconds / num);
       seconds %= num;
     } else {
