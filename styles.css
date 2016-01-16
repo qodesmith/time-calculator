@@ -7,18 +7,21 @@
   src: url(DS-DIGII.TTF);
 }
 body {
-  background: rgba(0, 0, 0, 0.7);
+  background: black;
   margin: 0;
   padding: 0;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
   width: 100vw;
   height: 100vh;
   font-family: sans-serif;
@@ -30,20 +33,19 @@ body {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   padding: 10px;
   border-radius: 17px;
-  background: #ccc;
+  background: #434343;
   width: 60%;
+  max-width: 1000px;
   height: 80%;
-  opacity: 0.92;
+  opacity: 0.93;
 }
 .calc-container .readout {
   position: relative;
   width: 100%;
   height: 15vmin;
+  background: #868579;
   background: gray;
   border-radius: 10px;
   font-family: 'DS-Digital', monospace, sans-serif;
@@ -83,127 +85,124 @@ body {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  height: 100%;
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
   font-size: 5vmin;
   padding: 5px;
   margin-top: 10px;
   border: 1px solid gray;
   border-radius: 10px;
-  background: #acacac;
-}
-.calc-container .buttons .numbers {
-  -webkit-flex-grow: 3;
-      -ms-flex-positive: 3;
-          flex-grow: 3;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-.calc-container .buttons .numbers .row {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -webkit-justify-content: space-around;
-      -ms-flex-pack: distribute;
-          justify-content: space-around;
-}
-.calc-container .buttons .operators {
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-.calc-container .buttons .operators .operator {
-  border: 1px solid gray;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  cursor: pointer;
-  border-radius: 5px;
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
 }
 .calc-container .buttons .button {
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.calc-container .buttons .button:hover {
+  background: white!important;
+}
+.calc-container .buttons .button.active {
+  background: black!important;
+  color: white;
+}
+.calc-container .buttons .number-pad {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-flex-basis: 75%;
+      -ms-flex-preferred-size: 75%;
+          flex-basis: 75%;
+}
+.calc-container .buttons .number-pad .row {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.calc-container .buttons .number-pad .row .pad {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-basis: 33.33333%;
+      -ms-flex-preferred-size: 33.33333%;
+          flex-basis: 33.33333%;
+  padding: 5px;
+}
+.calc-container .buttons .number-pad .row .pad#zero {
+  -webkit-flex-basis: 66.66667%;
+      -ms-flex-preferred-size: 66.66667%;
+          flex-basis: 66.66667%;
+}
+.calc-container .buttons .number-pad .row .pad .button {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 5px;
   border-radius: 5px;
-  border: 1px solid gray;
-  background: rgba(255, 255, 255, 0.2);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background: darkseagreen;
+}
+.calc-container .buttons .number-pad .row .pad .button#colon {
+  background: aquamarine;
+}
+.calc-container .buttons .operators {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-flex-basis: 25%;
+      -ms-flex-preferred-size: 25%;
+          flex-basis: 25%;
+}
+.calc-container .buttons .operators .operator {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
-.calc-container .buttons .button#number0 {
-  -webkit-flex-grow: 2;
-      -ms-flex-positive: 2;
-          flex-grow: 2;
+.calc-container .buttons .operators .operator#clear,
+.calc-container .buttons .operators .operator#delete {
+  background: aqua;
 }
-.calc-container .buttons .button:hover {
-  background: white;
+.calc-container .buttons .operators .operator#add,
+.calc-container .buttons .operators .operator#subtract {
+  background: yellow;
 }
-.calc-container .buttons .button.active {
-  background: black;
-  color: white;
-}
-@media screen and (max-width: 767px) {
-  .calc-container {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
-  }
-  .calc-container .readout {
-    height: 15vh;
-    font-size: 10vh;
-  }
-  .calc-container .plain-readout {
-    height: 10vh;
-    font-size: 4vh;
-  }
-  .calc-container .buttons {
-    padding: 3px;
-  }
-  .calc-container .buttons .button {
-    font-size: 6vh;
-    margin: 3px;
-  }
+.calc-container .buttons .operators .operator#equals {
+  background: tomato;
 }
 .bg-overlay {
   width: 100%;
@@ -212,17 +211,17 @@ body {
   top: 0;
   left: 0;
   z-index: -1;
+}
+.bg-overlay::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
   /* http://compresspng.com/ */
   background: url('grunge.png') no-repeat center center fixed;
   background-size: cover;
 }
 .randoms {
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
   overflow: hidden;
   font-family: monospace;
   font-weight: bold;
@@ -240,6 +239,9 @@ body {
     height: 15vh;
     font-size: 10vh;
   }
+  .calc-container .readout::before {
+    padding-top: 0.4vh;
+  }
   .calc-container .plain-readout {
     height: 10vh;
     font-size: 4vh;
@@ -249,5 +251,30 @@ body {
   }
   .calc-container .buttons .button {
     font-size: 5vh;
+  }
+}
+@media screen and (max-width: 767px) {
+  .calc-container {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .calc-container .readout {
+    height: 15vh;
+    font-size: 10vh;
+  }
+  .calc-container .readout::before {
+    padding-top: 0.8vh;
+  }
+  .calc-container .plain-readout {
+    height: 10vh;
+    font-size: 4vh;
+  }
+  .calc-container .buttons {
+    padding: 3px;
+  }
+  .calc-container .buttons .button {
+    font-size: 6vh;
+    margin: 3px;
   }
 }

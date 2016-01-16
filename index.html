@@ -6,31 +6,30 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="randoms"></div>
-  <div class="bg-overlay"></div>
+  <div class="bg-overlay randoms"></div>
   <div class="calc-container">
     <div class="readout"></div>
     <div class="plain-readout"></div>
     <div class="buttons">
-      <div class="numbers">
+      <div class="number-pad">
         <div class="row">
-          <div class="button number" id="number1">1</div>
-          <div class="button number" id="number2">2</div>
-          <div class="button number" id="number3">3</div>
+          <div class="pad"><div class="button number number1">1</div></div>
+          <div class="pad"><div class="button number number2">2</div></div>
+          <div class="pad"><div class="button number number3">3</div></div>
         </div>
         <div class="row">
-          <div class="button number" id="number4">4</div>
-          <div class="button number" id="number5">5</div>
-          <div class="button number" id="number6">6</div>
+          <div class="pad"><div class="button number number4">4</div></div>
+          <div class="pad"><div class="button number number5">5</div></div>
+          <div class="pad"><div class="button number number6">6</div></div>
         </div>
         <div class="row">
-          <div class="button number" id="number7">7</div>
-          <div class="button number" id="number8">8</div>
-          <div class="button number" id="number9">9</div>
+          <div class="pad"><div class="button number number7">7</div></div>
+          <div class="pad"><div class="button number number8">8</div></div>
+          <div class="pad"><div class="button number number9">9</div></div>
         </div>
         <div class="row">
-          <div class="button number" id="number0">0</div>
-          <div class="button" id="colon">:</div>
+          <div class="pad" id="zero"><div class="button number number0">0</div></div>
+          <div class="pad" ><div class="button" id="colon">:</div></div>
         </div>
       </div>
       <div class="operators">
@@ -42,6 +41,7 @@
       </div>
     </div>
   </div>
+  <div class="go-home">GO HOME</div>
   <script src="time-calculator.js"></script>
   <script src="numbersBG.js"></script>
 </body>

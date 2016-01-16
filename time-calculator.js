@@ -193,11 +193,10 @@ document.body.addEventListener('keydown', function(e) {
     if(badKey) return;
   }
 
-  var num = document.querySelector('#number' + (e.which - 48));
+  var num = document.querySelector('.number' + (e.which - 48));
 
   // Any number key.
   if(num) {
-
     // If we're expecting a number after an operator.
     if(nums.operating) {
       nums.operating = false;
