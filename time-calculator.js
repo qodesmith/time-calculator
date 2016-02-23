@@ -99,6 +99,7 @@ function plainReadout() {
 function reset() {
   nums = [];
   readout.textContent = '';
+  pReadout.textContent = '';
 }
 
 function clearActives() {
