@@ -114,7 +114,8 @@ function clearActives() {
 ///////////
 
 // CLICK
-document.body.addEventListener('click', function(e) {
+document.body.addEventListener('click', click);
+function click(e) {
   var classes = e.target.classList;
   var id = e.target.id;
 
@@ -157,21 +158,23 @@ document.body.addEventListener('click', function(e) {
   }
 
   plainReadout();
-});
+};
 
 // MOUSEDOWN
-document.body.addEventListener('mousedown', function(e) {
+document.body.addEventListener('mousedown', mousedown);
+function mousedown(e) {
   var classes = e.target.classList;
   clearActives();
   if(classes.contains('button')) classes.add('active');
-});
+};
 
 // MOUSEUP
-document.body.addEventListener('mouseup', function(e) {
+document.body.addEventListener('mouseup', mouseup);
+function mouseup(e) {
   var classes = e.target.classList;
   clearActives();
   if(classes.contains('active')) classes.remove('active');
-});
+};
 
 
 //////////////
@@ -179,7 +182,8 @@ document.body.addEventListener('mouseup', function(e) {
 //////////////
 
 // KEYDOWN
-document.body.addEventListener('keydown', function(e) {
+document.body.addEventListener('keydown', keydown);
+function keydown(e) {
   // Prevent auto-repeat, allow for delete key.
   if(nums.button === e.which && e.which !== 8) return;
   nums.button = e.which;
@@ -253,10 +257,11 @@ document.body.addEventListener('keydown', function(e) {
     document.querySelector('#equals').classList.add('active');
     operate('=');
   }
-});
+};
 
 // KEYUP
-document.body.addEventListener('keyup', function() {
+document.body.addEventListener('keyup', keyup);
+function keyup() {
   clearActives();
   nums.button = false;
-});
+};
