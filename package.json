@@ -1,7 +1,7 @@
 {
   "name": "time-calculator",
-  "version": "1.0.3",
-  "description": "A JavaScript calculator for adding & subtracting time",
+  "version": "1.0.4",
+  "description": "A JavaScript calculator for adding and subtracting time.",
   "main": "time-calculator.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
