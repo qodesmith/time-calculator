@@ -1,6 +1,6 @@
 {
   "name": "time-calculator",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A JavaScript calculator for adding and subtracting time.",
   "main": "time-calculator.js",
   "scripts": {
