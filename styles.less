@@ -1,0 +1,248 @@
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  /* http://www.dafont.com/ds-digital.font */
+  font-family: 'DS-Digital';
+  src: url(DS-DIGII.TTF);
+}
+
+body {
+  background: black;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+.calc-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 17px;
+  background: #434343;
+  width: 60%;
+  max-width: 1000px;
+  height: 80%;
+  opacity: 0.93;
+
+  .readout {
+    position: relative;
+    width: 100%;
+    height: 15vmin;
+    background: darkkhaki;
+    border-radius: 10px;
+    font-family: 'DS-Digital', monospace, sans-serif;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 8vmin;
+    font-weight: bold;
+    overflow: hidden;
+  }
+
+  .plain-readout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 3vmin;
+    font-weight: 100;
+    height: 8vmin;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding-right: 10px;
+    background: #7e7a47;
+  }
+
+  .buttons {
+    display: flex;
+    flex-basis: 100%;
+    font-size: 5vmin;
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+
+    .button {
+      cursor: pointer;
+      border: 1px solid transparent;
+
+      &:hover {
+        background: white!important;
+      }
+
+      &.active {
+        background: black!important;
+        color: white;
+      }
+    }
+
+    .number-pad {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 75%;
+
+      .row {
+        display: flex;
+        flex-grow: 1;
+
+        .pad {
+          display: flex;
+          flex-basis: 33.33333%;
+          padding: 5px;
+
+          &#zero {
+            flex-basis: 66.66667%;
+          }
+
+          .button {
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            user-select: none;
+            background: rgb(143,225,143);
+
+            &#colon {
+              background: aquamarine;
+            }
+          }
+        }
+      }
+    }
+
+    .operators {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 25%;
+
+      .operator {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 5px;
+        margin: 5px;
+        user-select: none;
+
+        &#clear,
+        &#delete {
+          background: rgba(0,255,255,0.85);
+        }
+
+        &#add,
+        &#subtract {
+          background: yellow;
+        }
+
+        &#equals {
+          background: tomato;
+        }
+      }
+    }
+  }
+}
+
+// Random numbers for background.
+
+.bg-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* http://compresspng.com/ */
+    background: url('grunge.png') no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+.randoms {
+  overflow: hidden;
+  font-family: monospace;
+  font-weight: bold;
+
+  .random {
+    position: absolute;
+    text-shadow: 0 0 25px white;
+  }
+}
+
+
+// Tablet breakpoint.
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .calc-container {
+    width: 80%;
+    height: 80%;
+
+    .readout {
+      height: 15vh;
+      font-size: 10vh;
+
+      &::before {
+        padding-top: 0.4vh;
+      }
+    }
+
+    .plain-readout {
+      height: 10vh;
+      font-size: 4vh;
+    }
+
+    .buttons {
+      padding: 3px;
+
+      .button {
+        font-size: 5vh;
+      }
+    }
+  }
+}
+
+// Mobile breakpoint.
+@media screen and (max-width: 767px) {
+  .calc-container {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+
+    .readout {
+      height: 15vh;
+      font-size: 10vh;
+
+      &::before {
+        padding-top: 0.8vh;
+      }
+    }
+
+    .plain-readout {
+      height: 10vh;
+      font-size: 4vh;
+    }
+
+    .buttons {
+      padding: 3px;
+
+      .button {
+        font-size: 6vh;
+        margin: 3px;
+      }
+    }
+  }
+}

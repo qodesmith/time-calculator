@@ -1,0 +1,30 @@
+{
+  "name": "time-calculator",
+  "version": "1.0.0",
+  "description": "A JavaScript calculator for adding & subtracting time",
+  "main": "time-calculator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Qodesmith",
+  "email": "theqodesmith@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-less": "^3.0.5"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qodesmith/time-calculator.git"
+  },
+  "keywords": [
+    "calculator",
+    "time",
+    "addition",
+    "subtraction",
+    "add",
+    "subtract"
+  ]
+}

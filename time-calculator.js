@@ -2,6 +2,17 @@ var readout = document.querySelector('.readout');
 var pReadout = document.querySelector('.plain-readout');
 var nums = [];
 
+window.onload = function() {
+  console.log('poop');
+  generateNumbers(); // Generates the page's number-filled background.
+}
+
+
+
+///////////////////////////
+// CALCULATOR OPERATIONS //
+///////////////////////////
+
 function operate(opr) {
   var segments = ['s', 'm', 'h', 'd'];
   var input = readout.textContent;
@@ -158,7 +169,7 @@ function click(e) {
   }
 
   plainReadout();
-};
+}
 
 // MOUSEDOWN
 document.body.addEventListener('mousedown', mousedown);
@@ -166,7 +177,7 @@ function mousedown(e) {
   var classes = e.target.classList;
   clearActives();
   if(classes.contains('button')) classes.add('active');
-};
+}
 
 // MOUSEUP
 document.body.addEventListener('mouseup', mouseup);
@@ -174,7 +185,7 @@ function mouseup(e) {
   var classes = e.target.classList;
   clearActives();
   if(classes.contains('active')) classes.remove('active');
-};
+}
 
 
 //////////////
@@ -257,11 +268,45 @@ function keydown(e) {
     document.querySelector('#equals').classList.add('active');
     operate('=');
   }
-};
+}
 
 // KEYUP
 document.body.addEventListener('keyup', keyup);
 function keyup() {
   clearActives();
   nums.button = false;
-};
+}
+
+
+/////////////////////
+// PAGE BACKGROUND //
+/////////////////////
+
+function randomNum(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function generateNumbers() {
+  for(var i = 0; i < 50; i ++) {
+    var div = document.createElement('div');
+    div.className = 'random';
+    div.textContent = randomNum(1, 50);
+    div.style.top = randomNum(1, 100) + '%';
+    div.style.left = randomNum(1, 100) + '%';
+    div.style.fontSize = randomNum(3, 20) + 'vw';
+    div.style.transform = 'rotate(' + randomNum(-45, 45) + 'deg)'
+
+    document.querySelector('.randoms').appendChild(div);
+  }
+}
+
+
+//////////////////////
+// REMOVE LISTENERS //
+//////////////////////
+
+function killCalcListeners() {
+  ['click', 'mousedown', 'mouseup', 'keydown', 'keyup'].map(function(event) {
+    document.body.removeEventListener(event, eval(event));
+  });
+}
