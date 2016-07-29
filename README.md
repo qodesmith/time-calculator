@@ -1,5 +1,5 @@
 # Time Calculator
-A JavaScript calculator for adding & subtracting time.
+A JavaScript calculator for adding &amp; subtracting time.
 
 ![screenshot of Time Calculator](https://raw.githubusercontent.com/qodesmith/time-calculator/master/calc-screenshot.png)
 
