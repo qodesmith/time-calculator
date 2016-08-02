@@ -1,6 +1,7 @@
 function timeCalculator() {
   var readout = document.querySelector('.readout');
   var pReadout = document.querySelector('.plain-readout');
+  var calcContainer = document.querySelector('.calc-container');
   var nums = [];
 
   generateNumbers(); // Generates the page's number-filled background.
@@ -111,7 +112,7 @@ function timeCalculator() {
   }
 
   function clearActives() {
-    var actives = document.querySelectorAll('.active');
+    var actives = calcContainer.querySelectorAll('.active');
     function byeActive(el) { el.classList.remove('active'); }
     [].map.call(actives, byeActive); // Call .map on array-like object 'actives'.
   }
@@ -206,7 +207,7 @@ function timeCalculator() {
       if(badKey) return;
     }
 
-    var num = document.querySelector('.number' + (e.which - 48));
+    var num = calcContainer.querySelector('.number' + (e.which - 48));
 
     // Any number key.
     if(num) {
@@ -228,7 +229,7 @@ function timeCalculator() {
 
     // :
     } else if(e.which === 186 && e.shiftKey) {
-      document.querySelector('#colon').classList.add('active');
+      calcContainer.querySelector('#colon').classList.add('active');
 
       if(nums.operating) return; // Do nothing if operating.
       if(!readout.textContent) return; // Do nothing for blank readout.
@@ -239,7 +240,7 @@ function timeCalculator() {
 
     // Backspace / delete.
     } else if(e.which === 8) {
-      document.querySelector('#delete').classList.add('active');
+      calcContainer.querySelector('#delete').classList.add('active');
 
       if(nums.operating) return; // Do nothing if operating.
       readout.textContent = readout.textContent.split('').slice(0, -1).join('');
@@ -247,22 +248,22 @@ function timeCalculator() {
 
     // ESC
     } else if(e.which === 27) {
-      document.querySelector('#clear').classList.add('active');
+      calcContainer.querySelector('#clear').classList.add('active');
       reset();
 
     // +
     } else if(e.which === 187 && e.shiftKey) {
-      document.querySelector('#add').classList.add('active');
+      calcContainer.querySelector('#add').classList.add('active');
       operate('+');
 
     // -
     } else if(e.which === 189 && !e.shiftKey) {
-      document.querySelector('#subtract').classList.add('active');
+      calcContainer.querySelector('#subtract').classList.add('active');
       operate('-');
 
     // = | enter
     } else if((e.which === 187 && !e.shiftKey) || e.which === 13) {
-      document.querySelector('#equals').classList.add('active');
+      calcContainer.querySelector('#equals').classList.add('active');
       operate('=');
     }
   }
