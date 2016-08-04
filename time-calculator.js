@@ -297,15 +297,18 @@ function timeCalculator() {
       document.querySelector('.randoms').appendChild(div);
     }
   }
-}
 
 
-//////////////////////
-// REMOVE LISTENERS //
-//////////////////////
+  //////////////////////
+  // REMOVE LISTENERS //
+  //////////////////////
 
-function killCalcListeners() {
-  ['click', 'mousedown', 'mouseup', 'keydown', 'keyup'].map(function(event) {
-    document.body.removeEventListener(event, eval(event));
-  });
+  document.body.addEventListener('killTimeCalc', killCalcListeners);
+  function killCalcListeners(e) {
+    document.body.removeEventListener(e.type, killCalcListeners);
+
+    ['click', 'mousedown', 'mouseup', 'keydown', 'keyup'].map(function(event) {
+      document.body.removeEventListener(event, eval(event));
+    });
+  }
 }
